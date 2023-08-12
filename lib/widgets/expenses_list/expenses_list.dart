@@ -9,8 +9,22 @@ import 'package:flutter/material.dart';
 import '../../../../../models/expense.dart';
 
 class ExpensesList extends StatelessWidget {
-  const ExpensesList({super.key, required this.expenses});
+  const ExpensesList({
+    super.key,
+    required this.expenses,
+    required this.onRemoveExpense,
+  });
+  //
+  //
   final List<Expense> expenses;
+  //
+  //
+  final void Function(Expense expense) onRemoveExpense;
+  //We defined this above Function to be used from "expenses.dart". However,
+  //please note that the word "function" will start with a caps i.e. "Function"
+  //if we write this starting a small letter, then it will report an error.
+  //
+  //
   @override
   Widget build(BuildContext context) {
     //
@@ -40,8 +54,27 @@ class ExpensesList extends StatelessWidget {
     return ListView.builder(
       itemCount: expenses.length,
       itemBuilder: (ctx, index) => Dismissible(
-        key: key,
+        key: ValueKey(expenses[index]),
+        //We have to use a key for the "ValueKey()" so that it understands
+        //which value it has to delete / swipe / remove from the list. We used
+        //here the "expenses[index]" which will help the "ValueKey()" to under
+        //stand which item it has to remove from the list.
+        onDismissed: (direction) {
+          onRemoveExpense(
+            expenses[index],
+          );
+        },
+        //This function will associate with the index which is being removed
+        //from the list & identify the data associated with this index & will
+        //also remove the data.
+        //For this we need to go to the "expenses.dart" file where we
+        //added new data addition method i.e. "_addExpense()" and after that
+        //we need to add another function for "onDismissed". However, we are
+        //basically ignoring the direction of swipe here but we are identifying
+        //which index will be removed from our data.
+        //
         child: ExpenseItem(expenses[index]),
+        //For child parameters we need to use the ExpenseItem with it's index
       ), //Dismissable
       //
       //###############################################################

@@ -63,7 +63,9 @@ class _ExpensesState extends State<Expenses> {
       isScrollControlled: true, //If this is set to "true" then the modal bottom
       //sheet will be of full screen
       context: context,
-      builder: (ctx) => NewExpense(onAddExpense: _addExpense),
+      builder: (ctx) => NewExpense(
+        onAddExpense: _addExpense,
+      ),
       //In the "NewExpense" class the pattern of "Modal Bottom Sheet" is
       //designed & we are calling it from here through "NewExpense".
     );
@@ -93,6 +95,15 @@ class _ExpensesState extends State<Expenses> {
 
 //
 //
+//The below method will remove the expenses from its data & initiate this
+//function "onDismissed()" widget in "expenses_list.dart" file, under
+//"listView.builder()".
+  void _removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+  }
+//
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +129,12 @@ class _ExpensesState extends State<Expenses> {
       body: Column(children: [
         const Text('the chart'),
         Expanded(
-          child: ExpensesList(expenses: _registeredExpenses),
+          child: ExpensesList(
+            expenses: _registeredExpenses,
+            onRemoveExpense: _removeExpense, //"onRemoveExpense" is pointing
+            //towards "_removeExpense". Similarly we are pointing "expenses"
+            //towards "_registeredExpenses".
+          ), //ExpensesList
           //We are using "ExpnasesList" class here & passing
           //"_registeredExpenses" to the "expenses" function.
           //We have also put an "Expanded" widget, as otherwise calling a "List"
