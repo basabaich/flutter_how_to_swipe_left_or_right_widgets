@@ -34,9 +34,17 @@ class ExpensesList extends StatelessWidget {
     //on scrolling of the screen. more difference you can read from Google
     //on this topic.
     //
+    //
+    //##############################################################
+    //HOW to swipe left or right : JUST USE "Dismissable()" widget as below
     return ListView.builder(
       itemCount: expenses.length,
-      itemBuilder: (ctx, index) => ExpenseItem(expenses[index]),
+      itemBuilder: (ctx, index) => Dismissible(
+        key: key,
+        child: ExpenseItem(expenses[index]),
+      ), //Dismissable
+      //
+      //###############################################################
       //The "ListView.builder()" has many variables. The most important ones
       //are "itemBuilder" & "itemCount".
       //An unknown variable is passed on for the "itemBuilder". Here it is
