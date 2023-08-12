@@ -60,6 +60,8 @@ class _ExpensesState extends State<Expenses> {
   //on the AppBar will open up a "Modal bottom sheet".
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true, //If this is set to "true" then the modal bottom
+      //sheet will be of full screen
       context: context,
       builder: (ctx) => NewExpense(onAddExpense: _addExpense),
       //In the "NewExpense" class the pattern of "Modal Bottom Sheet" is
